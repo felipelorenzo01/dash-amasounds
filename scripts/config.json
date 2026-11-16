@@ -1,0 +1,22 @@
+{
+  "account": {"id": "688393913209055", "name": "Ama Ad Account", "currency": "USD", "tz": "America/Los_Angeles"},
+  "pixel_id": "1158706088458570",
+  "event_date": "2026-12-12",
+  "since": "2026-11-09",
+  "campaign_keywords": ["12/12", "jingle"],
+  "audiences": [
+    {"key": "novo", "code": "ADV+", "keywords": ["advt+", "advantage", "south sd", "interesse"],
+     "label": {"pt": "Público novo", "es": "Público nuevo", "en": "New audience"},
+     "sub": {"pt": "Interesse em house e tech house · 21-35 · South SD", "es": "Interés en house y tech house · 21-35 · South SD", "en": "House and tech house fans · 21-35 · South SD"}},
+    {"key": "lal", "code": "LAL 1%", "keywords": ["lal", "lookalike", "semelhante"],
+     "label": {"pt": "Semelhantes", "es": "Similares", "en": "Lookalikes"},
+     "sub": {"pt": "1% parecido com quem já comprou", "es": "1% parecido a quienes ya compraron", "en": "1% like past buyers"}},
+    {"key": "rmkt", "code": "RMKT", "keywords": ["rmkt", "remarketing", "retarget"],
+     "label": {"pt": "Remarketing", "es": "Remarketing", "en": "Retargeting"},
+     "sub": {"pt": "Interagiu com o Instagram do Ama · 365 dias", "es": "Interactuó con el Instagram de Ama · 365 días", "en": "Engaged with Ama's Instagram · 365 days"}}
+  ],
+  "creatives": {
+    "video-vendas-abertas": {"pt": "Vídeo · Vendas abertas", "es": "Video · Ventas abiertas", "en": "Video · Tickets on sale"},
+    "estatico-vendas-abertas": {"pt": "Estático · Vendas abertas", "es": "Estático · Ventas abiertas", "en": "Static · Tickets on sale"}
+  }
+}

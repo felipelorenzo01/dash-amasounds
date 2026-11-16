@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jingle Jangle · Ama Sounds</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/logo-ama.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=Grenze+Gotisch:wght@600;800&display=swap">
+<style>
+/* Layout: one 1180px column on the Jingle Jangle night sky. Poster-style hero (title, red ribbons, countdown, tilted poster, Ama foliage in the corners), then period controls, audience tabs, KPI grid, chart + campaign funnel, pixel funnel, audience, comparison table, creatives. Single dark look on purpose. */
+:root{
+  --bg:#0a0f24; --card:#111a3d; --card2:#17214c; --line:rgba(233,180,76,.22);
+  --gold:#e9b44c; --orange:#f2722b; --red:#c9302c; --cream:#f4e8cf; --muted:#b3aec6; --lime:#c6d72a;
+  --accent:#e9b44c; --accent-ink:#1a1206;
+  --fill1-bg:linear-gradient(160deg,#f2c35e,#e0862b); --fill1-ink:#1b1106; --fill1-cap:rgba(27,17,6,.74);
+  --bar:#f2722b; --lineC:#e9b44c; --good:#86d694; --bad:#ff8f80; --grid:rgba(244,232,207,.08);
+  --f-display:"Grenze Gotisch","UnifrakturCook",Georgia,serif;
+  --f-num:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--cream);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.caps{font-family:var(--f-num);text-transform:uppercase;letter-spacing:.22em;font-weight:600}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+
+/* top strip */
+.strip{border-bottom:1px solid var(--line)}
+.strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:10px;font-size:12px}
+.strip .l{color:var(--cream)}
+.strip .r{display:flex;align-items:center;gap:14px;color:var(--muted)}
+.flags{display:flex;gap:6px}
+.flags button{width:30px;height:21px;padding:0;border:1px solid transparent;border-radius:3px;overflow:hidden;cursor:pointer;opacity:.55;background:none;transition:opacity .15s}
+.flags button svg{display:block;width:100%;height:100%}
+.flags button[aria-pressed="true"]{opacity:1;border-color:var(--gold);box-shadow:0 0 0 2px rgba(233,180,76,.25)}
+.flags button:hover{opacity:.9}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;
+  background:
+   radial-gradient(1px 1px at 12% 18%,rgba(255,255,255,.8),transparent 60%),
+   radial-gradient(1px 1px at 33% 72%,rgba(255,255,255,.6),transparent 60%),
+   radial-gradient(1.5px 1.5px at 58% 12%,rgba(255,255,255,.7),transparent 60%),
+   radial-gradient(1px 1px at 76% 44%,rgba(255,255,255,.6),transparent 60%),
+   radial-gradient(1px 1px at 88% 82%,rgba(255,255,255,.7),transparent 60%),
+   radial-gradient(1px 1px at 46% 38%,rgba(255,255,255,.5),transparent 60%),
+   radial-gradient(1.5px 1.5px at 22% 52%,rgba(255,255,255,.5),transparent 60%),
+   radial-gradient(1px 1px at 66% 64%,rgba(255,255,255,.5),transparent 60%),
+   radial-gradient(120% 60% at 50% 120%,rgba(201,48,44,.45),transparent 60%),
+   radial-gradient(80% 80% at 30% 0%,#1a2457,transparent 70%),
+   var(--bg)}
+.leaf{position:absolute;z-index:-1;pointer-events:none;filter:brightness(.5) saturate(.85);opacity:.9}
+.leaf.bl{left:0;bottom:0;width:min(34vw,330px);-webkit-mask-image:radial-gradient(circle at 0 100%,#000 35%,transparent 72%);mask-image:radial-gradient(circle at 0 100%,#000 35%,transparent 72%)}
+.leaf.tr{right:0;top:0;width:min(30vw,300px);-webkit-mask-image:radial-gradient(circle at 100% 0,#000 35%,transparent 72%);mask-image:radial-gradient(circle at 100% 0,#000 35%,transparent 72%)}
+.tex{position:absolute;left:0;right:0;white-space:nowrap;overflow:hidden;font-family:var(--f-num);font-size:11px;letter-spacing:.32em;color:var(--lime);opacity:.13;pointer-events:none;z-index:-1}
+.tex.t{top:8px}.tex.b{bottom:8px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:32px;align-items:center;padding-block:40px 46px}
+.sig{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sig img{width:150px;height:auto}
+.sig span{font-size:11px;color:var(--muted);letter-spacing:.24em}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(54px,8.6vw,108px);line-height:.86;margin:18px 0 6px;letter-spacing:.01em;
+  background:linear-gradient(180deg,#ffd27a 0%,var(--gold) 38%,var(--orange) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-wrap:balance;filter:drop-shadow(0 2px 0 rgba(0,0,0,.35))}
+.hero .sub{font-family:var(--f-display);font-weight:600;color:var(--gold);font-size:clamp(20px,2.6vw,28px);letter-spacing:.06em}
+.ribbons{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 20px}
+.ribbon{background:var(--red);color:#fff;font-family:var(--f-num);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:7px 20px;
+  clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,10px 100%,0 50%);outline:1.5px solid rgba(255,240,220,.75);outline-offset:-5px}
+.count{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.count .big{font-family:var(--f-num);font-weight:700;font-size:clamp(34px,4.6vw,52px);color:var(--cream);line-height:1}
+.count .lbl{font-size:12px;color:var(--muted)}
+.obj{margin-top:14px;font-size:17px;color:var(--cream);max-width:38ch}
+.poster{justify-self:center;position:relative;width:min(100%,330px)}
+.poster .frame{transform:rotate(4deg);border:1px solid var(--gold);padding:7px;background:rgba(10,15,36,.6);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 4px rgba(233,180,76,.08)}
+.poster img{display:block;width:100%}
+.star{position:absolute;fill:var(--gold);pointer-events:none}
+
+/* status + period */
+.status .wrap{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding-block:16px;border-bottom:1px solid var(--line)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-num);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:12px;padding:4px 12px;background:var(--red);color:#fff;border-radius:2px}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.status small{color:var(--muted);font-size:13px}
+.period .wrap{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;padding-block:16px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg .lab{font-size:11px;color:var(--muted);margin-right:4px}
+.seg button{background:var(--card);border:1px solid var(--line);color:var(--cream);border-radius:3px;padding:6px 11px;cursor:pointer;font-family:var(--f-num);font-weight:600;letter-spacing:.06em;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+select,input[type=date]{background:var(--card);border:1px solid var(--line);color:var(--cream);border-radius:3px;padding:6px 8px;font-family:var(--f-num);font-size:14px}
+.custom{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:6px}
+.tab{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 14px 12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0;transition:border-color .15s,transform .15s}
+.tab:hover{transform:translateY(-1px)}
+.tab[aria-selected="true"]{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent);background:var(--card2)}
+.tab .code{align-self:flex-start;font-family:var(--f-num);font-weight:700;font-size:11px;letter-spacing:.14em;padding:2px 7px;border:1px solid var(--red);color:#ffb3a8;border-radius:2px}
+.tab[aria-selected="true"] .code{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab .nm{font-weight:600;font-size:16px}
+.tab .sb{font-size:12.5px;color:var(--muted);min-height:2.5em}
+.tab .res{font-family:var(--f-num);font-size:26px;font-weight:700;color:var(--gold);line-height:1}
+.tab .cost{font-size:12.5px;color:var(--muted)}
+
+/* section heads */
+.sec{margin-top:34px}
+.ttl{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:14px}
+.ttl h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.6vw,40px);color:var(--gold);margin:0;line-height:1}
+.ttl .tag{font-family:var(--f-num);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;padding:3px 10px;background:var(--red);color:#fff;border-radius:2px}
+.ttl .per{flex-basis:100%;color:var(--muted);font-size:13px}
+h3{font-family:var(--f-num);text-transform:uppercase;letter-spacing:.2em;font-weight:700;font-size:14px;color:var(--cream);margin:0}
+.h3sub{color:var(--muted);font-size:13px;margin:4px 0 0}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi .k{font-family:var(--f-num);text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:600;color:var(--muted)}
+.kpi .v{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-weight:700;font-size:clamp(28px,3.2vw,38px);line-height:1.05;color:var(--gold)}
+.kpi .c{font-size:12.5px;color:var(--muted)}
+.kpi .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kpi.fill{background:var(--fill1-bg);border-color:transparent}
+.kpi.fill .k,.kpi.fill .c{color:var(--fill1-cap)}
+.kpi.fill .v{color:var(--fill1-ink)}
+.delta{font-family:var(--f-num);font-weight:700;font-size:13px;padding:1px 7px;border-radius:2px;background:rgba(244,232,207,.1);color:var(--cream)}
+.delta.up{color:var(--good)} .delta.dn{color:var(--bad)}
+.kpi.fill .delta{background:rgba(0,0,0,.18);color:var(--fill1-ink)}
+
+/* panels */
+.grid2{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px;min-width:0}
+.panel-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.mini{display:flex;gap:4px;flex-wrap:wrap}
+.mini button{background:transparent;border:1px solid var(--line);border-radius:3px;padding:3px 9px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+.mini button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:10px;margin-right:6px;vertical-align:middle}
+#chart svg{display:block;width:100%;height:auto}
+#chart text{font-family:var(--f-num);font-size:12px;fill:var(--muted)}
+
+/* funnels */
+.fun{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.fstep{position:relative;margin:0 auto;width:var(--w);min-width:0;background:linear-gradient(90deg,rgba(233,180,76,.16),rgba(242,114,43,.16));border:1px solid var(--line);border-radius:3px;padding:8px 12px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.fstep.last{background:var(--fill1-bg);border-color:transparent}
+.fstep.last .fl,.fstep.last .fv{color:var(--fill1-ink)}
+.fl{font-size:13.5px;color:var(--cream);min-width:0}
+.fv{font-family:var(--f-num);font-weight:700;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+.fconv{text-align:center;font-size:12px;color:var(--muted);font-family:var(--f-num);letter-spacing:.04em}
+.pixrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.pstep{background:var(--card2);border:1px solid var(--line);border-radius:3px;padding:12px;position:relative;min-width:0}
+.pstep .pv{font-family:var(--f-num);font-weight:700;font-size:30px;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.pstep .pl{font-size:13px;color:var(--cream);margin-top:4px}
+.pstep .pc{font-size:12px;color:var(--muted);margin-top:6px;font-family:var(--f-num);letter-spacing:.04em}
+.pstep.last{background:var(--fill1-bg);border-color:transparent}
+.pstep.last .pv,.pstep.last .pl,.pstep.last .pc{color:var(--fill1-ink)}
+.insight{margin-top:12px;font-size:14px;color:var(--cream);border-left:3px solid var(--lime);padding:4px 0 4px 12px}
+
+/* audience */
+.aud{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px}
+.agebars{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+.agerow{display:grid;grid-template-columns:52px minmax(0,1fr) 92px;gap:10px;align-items:center}
+.agerow .a{font-family:var(--f-num);font-weight:600;font-size:14px}
+.agerow .bars{display:flex;flex-direction:column;gap:3px}
+.agerow .bar{height:9px;border-radius:2px;min-width:2px}
+.bar.f{background:var(--orange)} .bar.m{background:var(--gold)} .bar.u{background:rgba(244,232,207,.35)}
+.agerow .t{font-family:var(--f-num);font-size:13px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.gcards{display:grid;grid-template-columns:1fr;gap:10px}
+.gcard{background:var(--card2);border:1px solid var(--line);border-radius:3px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.gcard .gn{display:flex;align-items:center;gap:8px;font-weight:600}
+.gcard .gn i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.gcard .gv{font-family:var(--f-num);font-weight:700;font-size:24px;color:var(--gold);text-align:right;line-height:1}
+.gcard .gs{font-size:12px;color:var(--muted);text-align:right;margin-top:3px}
+
+/* table */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:14px}
+th,td{padding:10px 12px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+th{font-family:var(--f-num);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+td{border-bottom:1px solid var(--grid);font-family:var(--f-num);font-size:16px}
+td:first-child{font-family:var(--f-body);font-size:14px}
+tr.best td{background:rgba(198,215,42,.08)}
+tr.best td:first-child{box-shadow:inset 3px 0 0 var(--lime)}
+.starb{color:var(--lime);margin-left:6px}
+tr.cur td:first-child{font-weight:600}
+tfoot td{color:var(--muted);border-bottom:0}
+
+/* creatives */
+.crs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
+.cr{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px;display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px}
+.cr img{width:118px;aspect-ratio:9/16;object-fit:cover;border-radius:3px;border:1px solid var(--line);max-width:100%}
+.cr .rk{font-family:var(--f-display);font-weight:800;font-size:30px;color:var(--gold);line-height:1}
+.cr .cn{font-weight:600;margin:4px 0 10px}
+.cr .q{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.cr .q div span{display:block;font-size:11.5px;color:var(--muted);font-family:var(--f-num);letter-spacing:.1em;text-transform:uppercase}
+.cr .q div b{font-family:var(--f-num);font-size:20px;color:var(--cream)}
+.cr .ft{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--grid);padding-top:10px;font-size:13px;color:var(--muted)}
+.cr a{color:var(--accent-ink);background:var(--accent);text-decoration:none;font-weight:600;padding:6px 12px;border-radius:3px;font-size:13px}
+.empty{padding:30px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:4px}
+
+/* footer */
+footer{margin-top:44px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:22px 34px;font-size:13px;color:var(--muted)}
+footer img{width:96px;height:auto}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .poster{width:min(76%,280px)}
+  .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2,.aud{grid-template-columns:1fr}
+  .pixrow{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:440px){
+  .strip .wrap{flex-direction:column;align-items:flex-start}
+  .cr{grid-template-columns:96px minmax(0,1fr)}
+  .cr img{width:96px}
+  .agerow{grid-template-columns:44px minmax(0,1fr) 78px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="strip"><div class="wrap">
+  <div class="l caps">Ama Sounds • San Diego, CA</div>
+  <div class="r"><span class="caps" data-i="strip_r"></span>
+    <div class="flags" role="group" aria-label="Language">
+      <button id="lang-pt" data-lang="pt" title="Português" aria-pressed="false"><svg viewBox="0 0 30 21"><rect width="30" height="21" fill="#009c3b"/><path d="M15 2.5 27 10.5 15 18.5 3 10.5z" fill="#ffdf00"/><circle cx="15" cy="10.5" r="4.6" fill="#002776"/><path d="M10.6 9.4c3-.6 6.3 0 8.8 1.6" stroke="#fff" stroke-width=".8" fill="none"/></svg></button>
+      <button id="lang-es" data-lang="es" title="Español" aria-pressed="false"><svg viewBox="0 0 30 21"><rect width="30" height="21" fill="#aa151b"/><rect y="5.25" width="30" height="10.5" fill="#f1bf00"/></svg></button>
+      <button id="lang-en" data-lang="en" title="English" aria-pressed="false"><svg viewBox="0 0 30 21"><rect width="30" height="21" fill="#fff"/><g fill="#b22234"><rect width="30" height="1.62"/><rect y="3.23" width="30" height="1.62"/><rect y="6.46" width="30" height="1.62"/><rect y="9.69" width="30" height="1.62"/><rect y="12.92" width="30" height="1.62"/><rect y="16.15" width="30" height="1.62"/><rect y="19.38" width="30" height="1.62"/></g><rect width="13" height="11.3" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.2" cy="2" r=".55"/><circle cx="5.4" cy="2" r=".55"/><circle cx="8.6" cy="2" r=".55"/><circle cx="11" cy="2" r=".55"/><circle cx="3.8" cy="4" r=".55"/><circle cx="7" cy="4" r=".55"/><circle cx="10.2" cy="4" r=".55"/><circle cx="2.2" cy="6" r=".55"/><circle cx="5.4" cy="6" r=".55"/><circle cx="8.6" cy="6" r=".55"/><circle cx="11" cy="6" r=".55"/><circle cx="3.8" cy="8" r=".55"/><circle cx="7" cy="8" r=".55"/><circle cx="10.2" cy="8" r=".55"/><circle cx="2.2" cy="10" r=".55"/><circle cx="5.4" cy="10" r=".55"/><circle cx="8.6" cy="10" r=".55"/></g></svg></button>
+    </div>
+  </div>
+</div></header>
+
+<section class="hero">
+  <img class="leaf bl" src="assets/folhas-1.jpg" alt="">
+  <img class="leaf tr" src="assets/folhas-2.jpg" alt="">
+  <div class="tex t" id="texT"></div><div class="tex b" id="texB"></div>
+  <svg class="star" style="left:46%;top:14%;width:22px" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
+  <svg class="star" style="left:55%;top:78%;width:14px;opacity:.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
+  <div class="wrap">
+    <div>
+      <div class="sig"><img src="assets/logo-ama.png" alt="ama sounds"><span class="caps">× The Usual Suspects × Warehouse Sessions</span></div>
+      <h1>Jingle Jangle</h1>
+      <div class="sub">A Nutcracker Ball</div>
+      <div class="ribbons">
+        <span class="ribbon" data-i="r_date"></span>
+        <span class="ribbon" data-i="r_time"></span>
+        <span class="ribbon">Secret Location, SD</span>
+      </div>
+      <div class="count"><span class="big" id="countBig"></span><span class="lbl caps" data-i="count_lbl"></span></div>
+      <p class="obj" data-i="obj"></p>
+    </div>
+    <div class="poster"><div class="frame"><img src="assets/poster.jpg" alt="Jingle Jangle poster"></div>
+      <svg class="star" style="left:-18px;top:-14px;width:30px" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
+    </div>
+  </div>
+</section>
+
+<section class="status"><div class="wrap"><span class="chip" data-i="chip"></span><small id="updated"></small></div></section>
+
+<section class="period"><div class="wrap">
+  <div class="seg" id="presets"><span class="lab caps" data-i="period"></span></div>
+  <div class="custom" id="customBox" hidden><label for="cStart" data-i="from"></label><input type="date" id="cStart"><label for="cEnd" data-i="to"></label><input type="date" id="cEnd"></div>
+  <div class="seg"><label class="lab caps" for="cmpSel" data-i="compare"></label><select id="cmpSel"></select></div>
+  <div class="custom" id="cmpBox" hidden><label for="kStart" data-i="from"></label><input type="date" id="kStart"><label for="kEnd" data-i="to"></label><input type="date" id="kEnd"></div>
+</div></section>
+
+<main class="wrap">
+  <div class="tabs" id="tabs" role="tablist"></div>
+
+  <div class="sec">
+    <div class="ttl"><h2 id="tabTitle"></h2><span class="tag" id="tabTag"></span><span class="per" id="tabPer"></span></div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+
+  <div class="sec grid2">
+    <div class="panel">
+      <div class="panel-h"><div><h3 data-i="chart_t"></h3></div><div class="mini" id="lineSel"></div></div>
+      <div id="chart"></div>
+      <div class="legend" id="chartLeg"></div>
+    </div>
+    <div class="panel">
+      <h3 data-i="fc_t"></h3><p class="h3sub" data-i="fc_s"></p>
+      <div class="fun" id="funC"></div>
+    </div>
+  </div>
+
+  <div class="sec panel">
+    <h3 data-i="fp_t"></h3><p class="h3sub" data-i="fp_s"></p>
+    <div class="pixrow" id="funP"></div>
+    <p class="insight" id="pixIns"></p>
+  </div>
+
+  <div class="sec">
+    <div class="ttl"><h2 id="audTitle"></h2></div>
+    <div class="aud">
+      <div class="panel">
+        <div class="panel-h"><div class="legend" style="margin:0"><span><i style="background:var(--orange)"></i><span data-i="g_f"></span></span><span><i style="background:var(--gold)"></i><span data-i="g_m"></span></span><span><i style="background:rgba(244,232,207,.35)"></i><span data-i="g_u"></span></span></div><div class="mini" id="audSel"></div></div>
+        <div class="agebars" id="ageBars"></div>
+      </div>
+      <div class="gcards" id="gCards"></div>
+    </div>
+    <p class="insight" id="audIns"></p>
+  </div>
+
+  <div class="sec">
+    <div class="ttl"><h2 data-i="cmp_t"></h2><span class="per" id="cmpSub"></span></div>
+    <div class="tbl"><table id="cmpTbl"></table></div>
+  </div>
+
+  <div class="sec">
+    <div class="ttl"><h2 data-i="cr_t"></h2><span class="per" id="crSub"></span></div>
+    <div class="crs" id="crs"></div>
+  </div>
+</main>
+
+<footer><div class="wrap"><span data-i="foot"></span><img src="assets/logo-ama.png" alt="ama sounds"></div></footer>
+
+<script>
+
+const T = {
+ pt:{strip_r:"Campanhas · Meta Ads", r_date:"Sábado, 12/12", r_time:"9:30 PM até tarde", count_lbl:"até a festa", obj:"Venda de ingressos no Meta, público por público.",
+  d_left:"faltam {n} dias", d_tom:"é amanhã", d_today:"é hoje", d_past:"aconteceu em 12/12",
+  chip:"Dados da Meta", updated:"Atualizado em {d} às {t} · atualiza todo dia às 6h (horário de Brasília)",
+  period:"Período", p7:"7 dias", p14:"14 dias", p30:"30 dias", pm:"Este mês", plm:"Mês passado", pall:"Tudo", pc:"Personalizado",
+  compare:"Comparar com", c_none:"Não comparar", c_prev:"Período anterior", c_lm:"Mês passado", c_custom:"Personalizado", from:"De", to:"até",
+  all:"Visão geral", all_sub:"Todos os públicos", all_code:"TODOS",
+  purch1:"compra", purchN:"compras", spent:"investidos", visits:"visitas",
+  per_lbl:"{a} – {b} · {n} {dias} com anúncio", day1:"dia", dayN:"dias",
+  k_spend:"Investimento", c_spend:"US$ {v} por dia no ar", k_pur:"Compras", c_pur:"Compras atribuídas aos anúncios", k_rev:"Receita", c_rev:"Valor das compras atribuídas",
+  k_roas:"ROAS", c_roas:"Receita ÷ investimento", k_cpa:"Custo por compra", c_cpa:"Investimento ÷ compras", c_cpa0:"Sem compra atribuída ainda",
+  k_imp:"Impressões", c_imp:"Vezes que o anúncio apareceu", k_clk:"Cliques no link", c_clk:"Cliques que levam à Shotgun", k_ctr:"CTR", c_ctr:"Cliques ÷ impressões",
+  vs:"vs. {p}", new_:"novo",
+  chart_t:"Investimento por dia", l_pur:"Compras", l_lpv:"Visitas à página", l_clk:"Cliques", leg_spend:"Investimento (US$)", leg_cmp:"Investimento no período comparado",
+  fc_t:"Funil das campanhas", fc_s:"Só a campanha de conversão do Jingle Jangle.", f_imp:"Impressões", f_clk:"Cliques no link", f_lpv:"Visitas à página", f_ic:"Checkouts", f_pur:"Compras",
+  fp_t:"Funil do pixel · Shotgun", fp_s:"Tudo o que o pixel registrou na página de ingressos, venha ou não de anúncio. O pixel não separa por público.",
+  p_pv:"Visualizações da página", p_atc:"Adições ao carrinho", p_ic:"Checkouts iniciados", p_pur:"Compras", of_prev:"{p} da etapa anterior",
+  pix_ins:"O pixel registrou {p} {compras} no período; {a} {atrib} aos anúncios até agora.", atrib1:"foi atribuída", atribN:"foram atribuídas",
+  aud_buy:"Quem está comprando", aud_arr:"Quem está chegando", m_spend:"Investimento", m_imp:"Impressões", m_clk:"Cliques", m_lpv:"Visitas à página", m_pur:"Compras",
+  g_f:"Mulheres", g_m:"Homens", g_u:"Outros", g_share:"{s} do investimento · {v} visitas",
+  ins_lpv:"Visita à página mais barata na faixa de {a} anos: {v}.", ins_pur:"Compra mais barata na faixa de {a} anos: {v}.",
+  cmp_t:"Comparativo de públicos", cmp_star_lpv:"★ menor custo por visita à página", cmp_star_pur:"★ menor custo por compra",
+  t_aud:"Público", t_spend:"Investimento", t_imp:"Impressões", t_ctr:"CTR", t_lpv:"Visitas", t_cplpv:"Custo/visita", t_ic:"Checkouts", t_pur:"Compras", t_cpa:"Custo/compra", t_roas:"ROAS", t_total:"Total",
+  cr_t:"Melhores criativos", cr_sub_lpv:"Ordenados por custo por visita à página, cópias somadas ao original.", cr_sub_pur:"Ordenados por custo por compra, cópias somadas ao original.",
+  q_pur:"Compras", q_cpa:"Custo/compra", q_lpv:"Visitas", q_ctr:"CTR", cr_ft:"Investido {s} · {i} impressões", cr_btn:"Ver prévia no Stories ↗",
+  cr_vid:"Vídeo · Vendas abertas", cr_est:"Estático · Vendas abertas",
+  empty:"Nenhum anúncio no ar neste período.", foot:"Painel de campanhas · Ama Sounds", rank:["1º","2º","3º","4º","5º"],
+  tab:{novo:["Público novo","Interesse em house e tech house · 21-35 · South SD"],lal:["Semelhantes","1% parecido com quem já comprou"],rmkt:["Remarketing","Interagiu com o Instagram do Ama · 365 dias"]}},
+ es:{strip_r:"Campañas · Meta Ads", r_date:"Sábado, 12/12", r_time:"9:30 PM hasta tarde", count_lbl:"para la fiesta", obj:"Venta de entradas en Meta, público por público.",
+  d_left:"faltan {n} días", d_tom:"es mañana", d_today:"es hoy", d_past:"fue el 12/12",
+  chip:"Datos de Meta", updated:"Actualizado el {d} a las {t} (hora del Pacífico) · se actualiza todos los días a la 1 AM",
+  period:"Período", p7:"7 días", p14:"14 días", p30:"30 días", pm:"Este mes", plm:"Mes pasado", pall:"Todo", pc:"Personalizado",
+  compare:"Comparar con", c_none:"No comparar", c_prev:"Período anterior", c_lm:"Mes pasado", c_custom:"Personalizado", from:"Desde", to:"hasta",
+  all:"Visión general", all_sub:"Todos los públicos", all_code:"TODOS",
+  purch1:"compra", purchN:"compras", spent:"invertidos", visits:"visitas",
+  per_lbl:"{a} – {b} · {n} {dias} con anuncios", day1:"día", dayN:"días",
+  k_spend:"Inversión", c_spend:"US$ {v} por día activo", k_pur:"Compras", c_pur:"Compras atribuidas a los anuncios", k_rev:"Ingresos", c_rev:"Valor de las compras atribuidas",
+  k_roas:"ROAS", c_roas:"Ingresos ÷ inversión", k_cpa:"Costo por compra", c_cpa:"Inversión ÷ compras", c_cpa0:"Aún sin compras atribuidas",
+  k_imp:"Impresiones", c_imp:"Veces que se mostró el anuncio", k_clk:"Clics en el enlace", c_clk:"Clics que llevan a Shotgun", k_ctr:"CTR", c_ctr:"Clics ÷ impresiones",
+  vs:"vs. {p}", new_:"nuevo",
+  chart_t:"Inversión por día", l_pur:"Compras", l_lpv:"Visitas a la página", l_clk:"Clics", leg_spend:"Inversión (US$)", leg_cmp:"Inversión en el período comparado",
+  fc_t:"Embudo de las campañas", fc_s:"Solo la campaña de conversión de Jingle Jangle.", f_imp:"Impresiones", f_clk:"Clics en el enlace", f_lpv:"Visitas a la página", f_ic:"Checkouts", f_pur:"Compras",
+  fp_t:"Embudo del píxel · Shotgun", fp_s:"Todo lo que el píxel registró en la página de entradas, venga o no de un anuncio. El píxel no separa por público.",
+  p_pv:"Vistas de la página", p_atc:"Añadidos al carrito", p_ic:"Checkouts iniciados", p_pur:"Compras", of_prev:"{p} de la etapa anterior",
+  pix_ins:"El píxel registró {p} {compras} en el período; {a} {atrib} a los anuncios hasta ahora.", atrib1:"fue atribuida", atribN:"fueron atribuidas",
+  aud_buy:"Quién está comprando", aud_arr:"Quién está llegando", m_spend:"Inversión", m_imp:"Impresiones", m_clk:"Clics", m_lpv:"Visitas a la página", m_pur:"Compras",
+  g_f:"Mujeres", g_m:"Hombres", g_u:"Otros", g_share:"{s} de la inversión · {v} visitas",
+  ins_lpv:"Visita a la página más barata en el rango de {a} años: {v}.", ins_pur:"Compra más barata en el rango de {a} años: {v}.",
+  cmp_t:"Comparativo de públicos", cmp_star_lpv:"★ menor costo por visita a la página", cmp_star_pur:"★ menor costo por compra",
+  t_aud:"Público", t_spend:"Inversión", t_imp:"Impresiones", t_ctr:"CTR", t_lpv:"Visitas", t_cplpv:"Costo/visita", t_ic:"Checkouts", t_pur:"Compras", t_cpa:"Costo/compra", t_roas:"ROAS", t_total:"Total",
+  cr_t:"Mejores creativos", cr_sub_lpv:"Ordenados por costo por visita a la página, copias sumadas al original.", cr_sub_pur:"Ordenados por costo por compra, copias sumadas al original.",
+  q_pur:"Compras", q_cpa:"Costo/compra", q_lpv:"Visitas", q_ctr:"CTR", cr_ft:"Invertido {s} · {i} impresiones", cr_btn:"Ver vista previa en Stories ↗",
+  cr_vid:"Video · Ventas abiertas", cr_est:"Estático · Ventas abiertas",
+  empty:"Ningún anuncio activo en este período.", foot:"Panel de campañas · Ama Sounds", rank:["1º","2º","3º","4º","5º"],
+  tab:{novo:["Público nuevo","Interés en house y tech house · 21-35 · South SD"],lal:["Similares","1% parecido a quienes ya compraron"],rmkt:["Remarketing","Interactuó con el Instagram de Ama · 365 días"]}},
+ en:{strip_r:"Campaigns · Meta Ads", r_date:"Saturday, December 12th", r_time:"9:30 PM – late", count_lbl:"until the ball", obj:"Ticket sales on Meta, audience by audience.",
+  d_left:"{n} days to go", d_tom:"it's tomorrow", d_today:"it's tonight", d_past:"happened on 12/12",
+  chip:"Meta data", updated:"Updated {d} at {t} Pacific · refreshes daily at 1 AM",
+  period:"Period", p7:"7 days", p14:"14 days", p30:"30 days", pm:"This month", plm:"Last month", pall:"All", pc:"Custom",
+  compare:"Compare to", c_none:"No comparison", c_prev:"Previous period", c_lm:"Last month", c_custom:"Custom", from:"From", to:"to",
+  all:"Overview", all_sub:"All audiences", all_code:"ALL",
+  purch1:"purchase", purchN:"purchases", spent:"spent", visits:"visits",
+  per_lbl:"{a} – {b} · {n} {dias} with ads", day1:"day", dayN:"days",
+  k_spend:"Spend", c_spend:"US$ {v} per day live", k_pur:"Purchases", c_pur:"Purchases attributed to ads", k_rev:"Revenue", c_rev:"Value of attributed purchases",
+  k_roas:"ROAS", c_roas:"Revenue ÷ spend", k_cpa:"Cost per purchase", c_cpa:"Spend ÷ purchases", c_cpa0:"No attributed purchase yet",
+  k_imp:"Impressions", c_imp:"Times the ad was shown", k_clk:"Link clicks", c_clk:"Clicks to the Shotgun page", k_ctr:"CTR", c_ctr:"Clicks ÷ impressions",
+  vs:"vs. {p}", new_:"new",
+  chart_t:"Spend per day", l_pur:"Purchases", l_lpv:"Page visits", l_clk:"Clicks", leg_spend:"Spend (US$)", leg_cmp:"Spend in the compared period",
+  fc_t:"Campaign funnel", fc_s:"Jingle Jangle conversion campaign only.", f_imp:"Impressions", f_clk:"Link clicks", f_lpv:"Page visits", f_ic:"Checkouts", f_pur:"Purchases",
+  fp_t:"Pixel funnel · Shotgun", fp_s:"Everything the pixel recorded on the ticket page, from ads or not. The pixel does not split by audience.",
+  p_pv:"Page views", p_atc:"Add to cart", p_ic:"Checkouts started", p_pur:"Purchases", of_prev:"{p} of the previous step",
+  pix_ins:"The pixel recorded {p} {compras} in the period; {a} {atrib} to ads so far.", atrib1:"was attributed", atribN:"were attributed",
+  aud_buy:"Who's buying", aud_arr:"Who's showing up", m_spend:"Spend", m_imp:"Impressions", m_clk:"Clicks", m_lpv:"Page visits", m_pur:"Purchases",
+  g_f:"Women", g_m:"Men", g_u:"Other", g_share:"{s} of spend · {v} visits",
+  ins_lpv:"Cheapest page visit among {a}-year-olds: {v}.", ins_pur:"Cheapest purchase among {a}-year-olds: {v}.",
+  cmp_t:"Audience comparison", cmp_star_lpv:"★ lowest cost per page visit", cmp_star_pur:"★ lowest cost per purchase",
+  t_aud:"Audience", t_spend:"Spend", t_imp:"Impressions", t_ctr:"CTR", t_lpv:"Visits", t_cplpv:"Cost/visit", t_ic:"Checkouts", t_pur:"Purchases", t_cpa:"Cost/purchase", t_roas:"ROAS", t_total:"Total",
+  cr_t:"Top creatives", cr_sub_lpv:"Ranked by cost per page visit, copies added to the original.", cr_sub_pur:"Ranked by cost per purchase, copies added to the original.",
+  q_pur:"Purchases", q_cpa:"Cost/purchase", q_lpv:"Visits", q_ctr:"CTR", cr_ft:"Spent {s} · {i} impressions", cr_btn:"View Stories preview ↗",
+  cr_vid:"Video · Tickets on sale", cr_est:"Static · Tickets on sale",
+  empty:"No ads ran in this period.", foot:"Campaign dashboard · Ama Sounds", rank:["1st","2nd","3rd","4th","5th"],
+  tab:{novo:["New audience","House and tech house fans · 21-35 · South SD"],lal:["Lookalikes","1% like past buyers"],rmkt:["Retargeting","Engaged with Ama's Instagram · 365 days"]}}
+};
+
+function boot(SEED){
+/* ---------- state ---------- */
+const st = {lang:"pt", tab:"all", preset:"all", cs:null, ce:null, cmp:"none", ks:null, ke:null, line:null, aud:"m_spend"};
+try{ const l=localStorage.getItem("jj_lang"); if(l&&T[l]) st.lang=l; else { const n=(navigator.language||"en").slice(0,2); st.lang=T[n]?n:"en"; } }catch(e){ const n=(navigator.language||"en").slice(0,2); st.lang=T[n]?n:"en"; }
+
+const t=(k,v)=>{ let s=T[st.lang][k]; if(s==null) s=T.en[k]??k; if(v) for(const x in v) s=s.split("{"+x+"}").join(v[x]); return s; };
+
+/* ---------- formatting (US) ---------- */
+const money=v=>"US$ "+v.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const int=v=>Math.round(v).toLocaleString("en-US");
+const pct=v=>v===0?"0%":(v*100).toFixed(v<0.1?2:1)+"%";
+const mdy=s=>{const [y,m,d]=s.split("-");return m+"/"+d+"/"+y;};
+const md=s=>{const [y,m,d]=s.split("-");return m+"/"+d;};
+
+/* ---------- dates ---------- */
+const TZ = SEED.meta.tz;
+const todayLA=()=>new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+const toD=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(Date.UTC(y,m-1,d));};
+const toS=d=>d.toISOString().slice(0,10);
+const addD=(s,n)=>{const d=toD(s);d.setUTCDate(d.getUTCDate()+n);return toS(d);};
+const addM=(s,n)=>{const d=toD(s);const day=d.getUTCDate();d.setUTCDate(1);d.setUTCMonth(d.getUTCMonth()+n);const last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();d.setUTCDate(Math.min(day,last));return toS(d);};
+const diffD=(a,b)=>Math.round((toD(b)-toD(a))/864e5);
+const days=(a,b)=>{const out=[];for(let s=a;s<=b;s=addD(s,1))out.push(s);return out;};
+
+const allDates = SEED.adsets_daily.map(r=>r[0]);
+const dataMin = allDates.reduce((a,b)=>a<b?a:b);
+const dataMax = SEED.meta.lastDay || allDates.reduce((a,b)=>a>b?a:b);
+const anchor = ()=>dataMax;
+
+function range(){
+  const end=anchor();
+  switch(st.preset){
+    case "p7": return [addD(end,-6),end];
+    case "p14": return [addD(end,-13),end];
+    case "p30": return [addD(end,-29),end];
+    case "pm": return [end.slice(0,8)+"01",end];
+    case "plm": { const s=addM(end.slice(0,8)+"01",-1); const e=addD(end.slice(0,8)+"01",-1); return [s,e]; }
+    case "pc": return [st.cs||dataMin, st.ce||end];
+    default: return [dataMin, dataMax];
+  }
+}
+function cmpRange(r){
+  if(st.cmp==="prev"){ const n=diffD(r[0],r[1])+1; return [addD(r[0],-n),addD(r[0],-1)]; }
+  if(st.cmp==="lm") return [addM(r[0],-1),addM(r[1],-1)];
+  if(st.cmp==="custom" && st.ks && st.ke) return [st.ks,st.ke];
+  return null;
+}
+
+/* ---------- aggregation ---------- */
+// adsets_daily: [date, adset, spend, impr, clicks, lpv, atc, ic, pur, rev]
+const inR=(d,r)=>d>=r[0]&&d<=r[1];
+const keep=a=>st.tab==="all"||a===st.tab;
+function agg(r,filterTab=true){
+  const o={spend:0,imp:0,clk:0,lpv:0,atc:0,ic:0,pur:0,rev:0,days:new Set()};
+  if(!r) return o;
+  for(const x of SEED.adsets_daily){ if(!inR(x[0],r)) continue; if(filterTab&&!keep(x[1])) continue;
+    o.spend+=x[2];o.imp+=x[3];o.clk+=x[4];o.lpv+=x[5];o.atc+=x[6];o.ic+=x[7];o.pur+=x[8];o.rev+=x[9]; if(x[2]>0) o.days.add(x[0]); }
+  return o;
+}
+function aggBy(r){ const m={}; for(const a of SEED.adsets) m[a.key]={spend:0,imp:0,clk:0,lpv:0,ic:0,pur:0,rev:0};
+  for(const x of SEED.adsets_daily){ if(!inR(x[0],r)) continue; const o=m[x[1]]; o.spend+=x[2];o.imp+=x[3];o.clk+=x[4];o.lpv+=x[5];o.ic+=x[7];o.pur+=x[8];o.rev+=x[9]; }
+  return m; }
+const div=(a,b)=>b>0?a/b:null;
+
+/* ---------- render ---------- */
+const $=id=>document.getElementById(id);
+const PRESETS=["p7","p14","p30","pm","plm","pall","pc"];
+const presetKey=p=>p==="pall"?"all":p;
+
+function renderStatic(){
+  document.documentElement.lang=st.lang==="pt"?"pt-BR":st.lang;
+  document.querySelectorAll("[data-i]").forEach(el=>{el.textContent=t(el.dataset.i);});
+  document.querySelectorAll(".flags button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===st.lang)));
+  // updated
+  const u=new Date(SEED.meta.updated);
+  const utz=st.lang==="pt"?"America/Bahia":"America/Los_Angeles";
+  const d=new Intl.DateTimeFormat("en-US",{timeZone:utz,month:"2-digit",day:"2-digit"}).format(u);
+  const tm=new Intl.DateTimeFormat(st.lang==="pt"?"pt-BR":"en-US",{timeZone:utz,hour:"numeric",minute:"2-digit",hour12:st.lang!=="pt"}).format(u);
+  $("updated").textContent=t("updated",{d,t:tm});
+  // countdown
+  const n=diffD(todayLA(),SEED.meta.event_date);
+  $("countBig").textContent = n>1?t("d_left",{n}):n===1?t("d_tom"):n===0?t("d_today"):t("d_past");
+  // presets
+  const ps=$("presets"); ps.querySelectorAll("button").forEach(b=>b.remove());
+  for(const p of PRESETS){ const b=document.createElement("button"); b.id="pr-"+p; b.textContent=t(p); b.setAttribute("aria-pressed",String(presetKey(p)===st.preset));
+    b.onclick=()=>{st.preset=presetKey(p); if(p==="pc"){const r=range(); st.cs=st.cs||dataMin; st.ce=st.ce||r[1];} render();}; ps.appendChild(b); }
+  const cs=$("cmpSel"); const cur=st.cmp; cs.innerHTML="";
+  for(const [v,k] of [["none","c_none"],["prev","c_prev"],["lm","c_lm"],["custom","c_custom"]]){ const o=document.createElement("option"); o.value=v;o.textContent=t(k); if(v===cur)o.selected=true; cs.appendChild(o); }
+  // texture text
+  const rep=" AMA SOUNDS ·".repeat(40); $("texT").textContent=rep; $("texB").textContent=rep;
+}
+
+const audOf=key=>SEED.adsets.find(a=>a.key===key)||{label:{},sub:{},name:key,code:""};
+const audName=key=>{const a=audOf(key);return a.label[st.lang]||a.name;};
+function tabMeta(key){ if(key==="all") return {nm:t("all"),sb:t("all_sub"),code:t("all_code")}; const a=audOf(key); return {nm:audName(key),sb:a.sub[st.lang]||"",code:a.code}; }
+const purWord=n=>n===1?t("purch1"):t("purchN");
+
+function renderTabs(r){
+  const by=aggBy(r); const tot=agg(r,false); const el=$("tabs"); el.innerHTML="";
+  for(const key of ["all",...SEED.adsets.map(a=>a.key)]){
+    const m=tabMeta(key); const o=key==="all"?tot:by[key];
+    const b=document.createElement("button"); b.className="tab"; b.id="tab-"+key; b.setAttribute("role","tab"); b.setAttribute("aria-selected",String(st.tab===key));
+    b.innerHTML=`<span class="code">${m.code}</span><span class="nm">${m.nm}</span><span class="sb">${m.sb}</span><span class="res">${int(o.pur)} <small style="font-size:15px;font-weight:600;letter-spacing:.06em">${purWord(o.pur)}</small></span><span class="cost">${money(o.spend)} ${t("spent")} · ${int(o.lpv)} ${t("visits")}</span>`;
+    b.onclick=()=>{st.tab=key;render();}; el.appendChild(b);
+  }
+}
+
+function delta(cur,base,lowerBetter){
+  if(base==null) return "";
+  if(cur==null) return "";
+  if(base===0){ return cur>0?`<span class="delta">${t("new_")}</span>`:""; }
+  const ch=(cur-base)/base; if(!isFinite(ch)) return "";
+  const good = lowerBetter? ch<0 : ch>0;
+  const cls = Math.abs(ch)<0.005?"":(good?"up":"dn");
+  return `<span class="delta ${cls}">${ch>0?"▲":"▼"} ${Math.abs(ch*100).toFixed(0)}%</span>`;
+}
+
+function renderKPIs(r,cr){
+  const a=agg(r), b=cr?agg(cr):null;
+  const nd=a.days.size;
+  const val=(o,k)=>({spend:o.spend,pur:o.pur,rev:o.rev,roas:div(o.rev,o.spend),cpa:div(o.spend,o.pur),imp:o.imp,clk:o.clk,ctr:div(o.clk,o.imp)})[k];
+  const defs=[
+    ["spend","k_spend",money(a.spend),t("c_spend",{v:(nd?a.spend/nd:0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}),true,false],
+    ["pur","k_pur",int(a.pur),t("c_pur"),true,false],
+    ["roas","k_roas",(a.spend>0?(a.rev/a.spend):0).toFixed(2)+"×",t("c_roas"),true,false],
+    ["rev","k_rev",money(a.rev),t("c_rev"),false,false],
+    ["cpa","k_cpa",a.pur>0?money(a.spend/a.pur):"—",a.pur>0?t("c_cpa"):t("c_cpa0"),false,true],
+    ["imp","k_imp",int(a.imp),t("c_imp"),false,false],
+    ["clk","k_clk",int(a.clk),t("c_clk"),false,false],
+    ["ctr","k_ctr",a.imp>0?pct(a.clk/a.imp):"—",t("c_ctr"),false,false],
+  ];
+  $("kpis").innerHTML=defs.map(([k,lab,v,cap,fill,low])=>{
+    const d=b?delta(val(a,k),val(b,k),low):"";
+    return `<div class="kpi${fill?" fill":""}" id="kpi-${k}"><span class="k">${t(lab)}</span><div class="row"><span class="v">${v}</span>${d}</div><span class="c">${cap}</span></div>`;
+  }).join("");
+}
+
+function nice(max){ if(max<=0) return {max:1,step:.25}; const raw=max/4; const p=Math.pow(10,Math.floor(Math.log10(raw))); const f=raw/p; const s=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p; return {max:Math.ceil(max/s)*s,step:s}; }
+
+function renderChart(r,cr){
+  const a=agg(r);
+  const lines=[["pur","l_pur",8],["lpv","l_lpv",5],["clk","l_clk",4]];
+  if(!st.line) st.line = a.pur>0?"pur":"lpv";
+  $("lineSel").innerHTML=lines.map(([k,l])=>`<button id="ln-${k}" aria-pressed="${st.line===k}">${t(l)}</button>`).join("");
+  lines.forEach(([k])=>{$("ln-"+k).onclick=()=>{st.line=k;render();};});
+  const idx=lines.find(x=>x[0]===st.line)[2];
+  // active-day window: from first to last date in range that is within data
+  const s=r[0]<dataMin?dataMin:r[0], e=r[1]>dataMax?dataMax:r[1];
+  const ds = s<=e?days(s,e):[];
+  const sp={},mv={};
+  for(const x of SEED.adsets_daily){ if(!inR(x[0],r)||!keep(x[1])) continue; sp[x[0]]=(sp[x[0]]||0)+x[2]; mv[x[0]]=(mv[x[0]]||0)+x[idx]; }
+  let cmpVals=null;
+  if(cr){ const cs=days(cr[0],cr[1]); cmpVals=ds.map((d,i)=>{const cd=cs[i]; if(!cd) return null; let v=0; for(const x of SEED.adsets_daily){ if(x[0]===cd&&keep(x[1])) v+=x[2]; } return v;}); }
+  const box=$("chart");
+  if(!ds.length){ box.innerHTML=`<div class="empty">${t("empty")}</div>`; $("chartLeg").innerHTML=""; return; }
+  const W=Math.max(320,Math.round(box.clientWidth||640)), H=280, L=58, R=44, Tp=16, B=34;
+  const iw=W-L-R, ih=H-Tp-B;
+  const smax=Math.max(...ds.map(d=>sp[d]||0),...(cmpVals||[]).map(v=>v||0));
+  const ms=nice(smax), ml=nice(Math.max(...ds.map(d=>mv[d]||0)));
+  const ys=v=>Tp+ih-(v/ms.max)*ih, yl=v=>Tp+ih-(v/ml.max)*ih;
+  const bw=iw/ds.length, barW=Math.min(64,bw*.56);
+  let g="";
+  for(let v=0;v<=ms.max+1e-9;v+=ms.step){ const y=ys(v); g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="var(--grid)"/><text x="${L-8}" y="${y+4}" text-anchor="end">$${v%1?v.toFixed(2):v}</text>`; }
+  for(let v=0;v<=ml.max+1e-9;v+=ml.step){ const y=yl(v); g+=`<text x="${W-R+8}" y="${y+4}" text-anchor="start">${v%1?v.toFixed(1):v}</text>`; }
+  let bars="",pts=[],labels="",step=Math.ceil(ds.length/10);
+  ds.forEach((d,i)=>{ const cx=L+bw*i+bw/2; const v=sp[d]||0; const y=ys(v);
+    bars+=`<rect x="${cx-barW/2}" y="${y}" width="${barW}" height="${Tp+ih-y}" fill="var(--bar)" rx="2"><title>${md(d)} · ${money(v)}</title></rect>`;
+    if(ds.length<=7 && v>0) bars+=`<text x="${cx}" y="${y-6}" text-anchor="middle" style="fill:var(--cream)">$${v.toFixed(2)}</text>`;
+    pts.push([cx,yl(mv[d]||0),mv[d]||0]);
+    if(i%step===0) labels+=`<text x="${cx}" y="${H-10}" text-anchor="middle">${md(d)}</text>`; });
+  const path=pts.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+  let cmpPath="";
+  if(cmpVals){ const cp=cmpVals.map((v,i)=>v==null?null:[L+bw*i+bw/2,ys(v)]).filter(Boolean); if(cp.length) cmpPath=`<path d="${cp.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ")}" fill="none" stroke="var(--cream)" stroke-width="1.6" stroke-dasharray="5 5" opacity=".7"/>`; }
+  const dots=pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="var(--bg)" stroke="var(--lineC)" stroke-width="2.5"><title>${int(p[2])}</title></circle>`).join("");
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t("chart_t")}">${g}${bars}${cmpPath}<path d="${path}" fill="none" stroke="var(--lineC)" stroke-width="2.5"/>${dots}${labels}</svg>`;
+  $("chartLeg").innerHTML=`<span><i style="background:var(--bar)"></i>${t("leg_spend")}</span><span><i style="background:var(--lineC);height:3px"></i>${t(lines.find(x=>x[0]===st.line)[1])}</span>${cmpVals?`<span><i style="border-top:2px dashed var(--cream);height:0"></i>${t("leg_cmp")}</span>`:""}`;
+}
+
+function renderFunnels(r){
+  const a=agg(r);
+  const steps=[["f_imp",a.imp],["f_clk",a.clk],["f_lpv",a.lpv],["f_ic",a.ic],["f_pur",a.pur]];
+  const w=[100,86,72,60,50];
+  $("funC").innerHTML=steps.map(([k,v],i)=>{
+    const conv=i?`<div class="fconv">↓ ${steps[i-1][1]>0?pct(v/steps[i-1][1]):"—"}</div>`:"";
+    return conv+`<div class="fstep${i===steps.length-1?" last":""}" style="--w:${w[i]}%"><span class="fl">${t(k)}</span><span class="fv">${int(v)}</span></div>`;
+  }).join("");
+  const px={pv:0,atc:0,ic:0,pur:0};
+  for(const x of SEED.pixel_daily){ if(!inR(x[0],r)) continue; px.pv+=x[1];px.atc+=x[2];px.ic+=x[3];px.pur+=x[4]; }
+  const ps=[["p_pv",px.pv],["p_atc",px.atc],["p_ic",px.ic],["p_pur",px.pur]];
+  $("funP").innerHTML=ps.map(([k,v],i)=>`<div class="pstep${i===ps.length-1?" last":""}"><div class="pv">${int(v)}</div><div class="pl">${t(k)}</div><div class="pc">${i?t("of_prev",{p:ps[i-1][1]>0?pct(v/ps[i-1][1]):"—"}):"&nbsp;"}</div></div>`).join("");
+  const all=agg(r,false);
+  $("pixIns").textContent=t("pix_ins",{p:int(px.pur),compras:purWord(px.pur),a:int(all.pur),atrib:all.pur===1?t("atrib1"):t("atribN")});
+}
+
+const AGES=["18-24","25-34","35-44","45-54","55-64","65+"];
+function renderAudience(r){
+  const tot=agg(r);
+  $("audTitle").textContent= tot.pur>0?t("aud_buy"):t("aud_arr");
+  const ms=[["m_spend",4],["m_imp",5],["m_clk",6],["m_lpv",7],["m_pur",8]];
+  $("audSel").innerHTML=ms.map(([k])=>`<button id="au-${k}" aria-pressed="${st.aud===k}">${t(k)}</button>`).join("");
+  ms.forEach(([k])=>{$("au-"+k).onclick=()=>{st.aud=k;render();};});
+  const mi=ms.find(x=>x[0]===st.aud)[1];
+  // demo: [date, adset, age, g, spend, impr, clicks, lpv, pur, rev]
+  const cell={}; const gt={f:{s:0,l:0,v:0},m:{s:0,l:0,v:0},u:{s:0,l:0,v:0}}; const ageT={};
+  for(const x of SEED.demo_daily){ if(!inR(x[0],r)||!keep(x[1])) continue;
+    const k=x[2]+"|"+x[3]; cell[k]=(cell[k]||0)+x[mi];
+    gt[x[3]].s+=x[4]; gt[x[3]].l+=x[7];
+    ageT[x[2]]=ageT[x[2]]||{s:0,l:0,p:0}; ageT[x[2]].s+=x[4]; ageT[x[2]].l+=x[7]; ageT[x[2]].p+=x[8]; }
+  const fmt=st.aud==="m_spend"?money:int;
+  const mx=Math.max(0.0001,...Object.values(cell));
+  $("ageBars").innerHTML=AGES.map(a=>{ const f=cell[a+"|f"]||0,m=cell[a+"|m"]||0,u=cell[a+"|u"]||0;
+    return `<div class="agerow"><span class="a">${a}</span><div class="bars"><div class="bar f" style="width:${f/mx*100}%" title="${t("g_f")}: ${fmt(f)}"></div><div class="bar m" style="width:${m/mx*100}%" title="${t("g_m")}: ${fmt(m)}"></div>${u>0?`<div class="bar u" style="width:${u/mx*100}%" title="${t("g_u")}: ${fmt(u)}"></div>`:""}</div><span class="t">${fmt(f+m+u)}</span></div>`; }).join("");
+  const ts=gt.f.s+gt.m.s+gt.u.s;
+  $("gCards").innerHTML=[["f","g_f","var(--orange)"],["m","g_m","var(--gold)"],["u","g_u","rgba(244,232,207,.35)"]].map(([g,l,c])=>`<div class="gcard" id="g-${g}"><span class="gn"><i style="background:${c}"></i>${t(l)}</span><div><div class="gv">${money(gt[g].s)}</div><div class="gs">${t("g_share",{s:ts>0?pct(gt[g].s/ts):"—",v:int(gt[g].l)})}</div></div></div>`).join("");
+  let best=null;
+  const usePur=tot.pur>0;
+  for(const a of AGES){ const o=ageT[a]; if(!o) continue; const n=usePur?o.p:o.l; if(n>0){ const c=o.s/n; if(!best||c<best[1]) best=[a,c]; } }
+  $("audIns").textContent= best? t(usePur?"ins_pur":"ins_lpv",{a:best[0],v:money(best[1])}) : "";
+  $("audIns").hidden=!best;
+}
+
+function renderTable(r){
+  const by=aggBy(r), tot=agg(r,false);
+  const usePur=tot.pur>0;
+  let best=null;
+  for(const a of SEED.adsets){ const o=by[a.key]; const n=usePur?o.pur:o.lpv; if(n>0){ const c=o.spend/n; if(!best||c<best[1]) best=[a.key,c]; } }
+  $("cmpSub").textContent= best? t(usePur?"cmp_star_pur":"cmp_star_lpv"):"";
+  const row=(nm,o,cls,star)=>`<tr class="${cls}"><td>${nm}${star?'<span class="starb">★</span>':""}</td><td>${money(o.spend)}</td><td>${int(o.imp)}</td><td>${o.imp?pct(o.clk/o.imp):"—"}</td><td>${int(o.lpv)}</td><td>${o.lpv?money(o.spend/o.lpv):"—"}</td><td>${int(o.ic)}</td><td>${int(o.pur)}</td><td>${o.pur?money(o.spend/o.pur):"—"}</td><td>${o.spend?(o.rev/o.spend).toFixed(2)+"×":"—"}</td></tr>`;
+  const head=`<thead><tr>${["t_aud","t_spend","t_imp","t_ctr","t_lpv","t_cplpv","t_ic","t_pur","t_cpa","t_roas"].map(k=>`<th>${t(k)}</th>`).join("")}</tr></thead>`;
+  const body=SEED.adsets.filter(a=>by[a.key].spend>0).sort((x,y)=>by[y.key].spend-by[x.key].spend).map(a=>row(audName(a.key),by[a.key],[best&&best[0]===a.key?"best":"",st.tab===a.key?"cur":""].join(" "),best&&best[0]===a.key)).join("");
+  $("cmpTbl").innerHTML= body? head+`<tbody>${body}</tbody><tfoot>${row(t("t_total"),tot,"",false)}</tfoot>` : `<tbody><tr><td class="empty" colspan="10">${t("empty")}</td></tr></tbody>`;
+}
+
+function renderCreatives(r){
+  // ads_daily: [date, adset, creative, spend, impr, clicks, lpv, ic, pur, rev]
+  const m={};
+  for(const x of SEED.ads_daily){ if(!inR(x[0],r)||!keep(x[1])) continue; const o=m[x[2]]=m[x[2]]||{s:0,i:0,c:0,l:0,p:0,v:0}; o.s+=x[3];o.i+=x[4];o.c+=x[5];o.l+=x[6];o.p+=x[8];o.v+=x[9]; }
+  const list=Object.entries(m).filter(([,o])=>o.s>0);
+  const usePur=list.some(([,o])=>o.p>0);
+  $("crSub").textContent=t(usePur?"cr_sub_pur":"cr_sub_lpv");
+  const cost=o=>{const n=usePur?o.p:o.l; return n>0?o.s/n:Infinity;};
+  list.sort((a,b)=>cost(a[1])-cost(b[1])||b[1].s-a[1].s);
+  if(!list.length){ $("crs").innerHTML=`<div class="empty">${t("empty")}</div>`; return; }
+  $("crs").innerHTML=list.map(([k,o],i)=>{ const c=SEED.creatives[k];
+    return `<article class="cr" id="cr-${k}"><img src="${c.thumb}" alt="${c.label[st.lang]||c.name}"><div><div class="rk">${T[st.lang].rank[i]||(i+1)}</div><div class="cn">${c.label[st.lang]||c.name}</div>
+     <div class="q"><div><span>${t("q_pur")}</span><b>${int(o.p)}</b></div><div><span>${t("q_cpa")}</span><b>${o.p?money(o.s/o.p):"—"}</b></div><div><span>${t("q_lpv")}</span><b>${int(o.l)}</b></div><div><span>${t("q_ctr")}</span><b>${o.i?pct(o.c/o.i):"—"}</b></div></div></div>
+     <div class="ft"><span>${t("cr_ft",{s:money(o.s),i:int(o.i)})}</span>${c.preview?`<a href="${c.preview}" target="_blank" rel="noopener">${t("cr_btn")}</a>`:""}</div></article>`; }).join("");
+}
+
+function render(){
+  renderStatic();
+  const r=range(); const cr=cmpRange(r);
+  $("customBox").hidden = st.preset!=="pc"; $("cmpBox").hidden = st.cmp!=="custom";
+  if(st.preset==="pc"){ $("cStart").value=r[0]; $("cEnd").value=r[1]; }
+  renderTabs(r);
+  const m=tabMeta(st.tab); $("tabTitle").textContent=m.nm; $("tabTag").textContent=m.code;
+  const a=agg(r); const nd=a.days.size;
+  $("tabPer").textContent=t("per_lbl",{a:mdy(r[0]),b:mdy(r[1]),n:nd,dias:nd===1?t("day1"):t("dayN")})+(cr?" · "+t("vs",{p:mdy(cr[0])+" – "+mdy(cr[1])}):"");
+  renderKPIs(r,cr); renderChart(r,cr); renderFunnels(r); renderAudience(r); renderTable(r); renderCreatives(r);
+}
+
+/* ---------- events ---------- */
+document.querySelectorAll(".flags button").forEach(b=>b.onclick=()=>{st.lang=b.dataset.lang; try{localStorage.setItem("jj_lang",st.lang);}catch(e){} render();});
+$("cStart").onchange=e=>{st.cs=e.target.value;render();}; $("cEnd").onchange=e=>{st.ce=e.target.value;render();};
+$("cmpSel").onchange=e=>{st.cmp=e.target.value; if(st.cmp==="custom"&&!st.ks){const r=range(); const n=diffD(r[0],r[1])+1; st.ks=addD(r[0],-n); st.ke=addD(r[0],-1); $("kStart").value=st.ks; $("kEnd").value=st.ke;} render();};
+$("kStart").onchange=e=>{st.ks=e.target.value;render();}; $("kEnd").onchange=e=>{st.ke=e.target.value;render();};
+let rz; window.addEventListener("resize",()=>{clearTimeout(rz); rz=setTimeout(()=>renderChart(range(),cmpRange(range())),120);});
+render();
+}
+fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok) throw new Error(r.status); return r.json();}).then(boot).catch(()=>{
+  const m=document.createElement("p"); m.className="empty"; m.style.margin="24px auto"; m.textContent="Não foi possível carregar os dados agora. Recarregue a página em alguns minutos.";
+  document.querySelector("main").prepend(m);
+});
+</script>
+</body>
+</html>
