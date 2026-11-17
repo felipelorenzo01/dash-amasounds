@@ -193,6 +193,24 @@ tfoot td{color:var(--muted);border-bottom:0}
 /* creatives */
 .crs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:12px}
 .cr{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px;display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px}
+.cr .noimg{width:118px;aspect-ratio:9/16;border:1px dashed var(--line);border-radius:3px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;color:var(--muted);font-size:12px}
+.sg-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:12px;margin-top:12px}
+.srcs{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.src .sh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px}
+.src .sh b{font-family:var(--f-num);font-weight:600;letter-spacing:.02em;color:var(--cream)}
+.src .sh span{font-size:12.5px;color:var(--muted);font-family:var(--f-num);font-variant-numeric:tabular-nums;text-align:right}
+.src .bar{height:10px;background:rgba(244,232,207,.08);border-radius:2px;margin-top:5px;overflow:hidden}
+.src .bar i{display:block;height:100%;background:var(--gold);border-radius:2px}
+.src.ads .bar i{background:var(--lime)}
+.src.ads .sh b{color:var(--lime)}
+.chs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.ch{border:1px solid var(--line);border-radius:3px;padding:12px}
+.ch .cv{font-family:var(--f-num);font-weight:700;font-size:30px;line-height:1.05;color:var(--gold);font-variant-numeric:tabular-nums}
+.ch .cl{font-family:var(--f-num);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:600;color:var(--muted)}
+.ch .cs{font-size:12.5px;color:var(--muted);margin-top:4px}
+.fsep{text-align:center;font-size:11px;color:var(--lime);font-family:var(--f-num);letter-spacing:.16em;text-transform:uppercase;margin:6px 0 2px}
+.fstep.real{background:transparent;border:2px solid var(--lime)}
+.fstep.real .fl,.fstep.real .fv{color:var(--lime)}
 .cr img{width:118px;aspect-ratio:9/16;object-fit:cover;border-radius:3px;border:1px solid var(--line);max-width:100%}
 .cr .rk{font-family:var(--f-display);font-weight:800;font-size:30px;color:var(--gold);line-height:1}
 .cr .cn{font-weight:600;margin:4px 0 10px}
@@ -213,13 +231,14 @@ footer img{width:96px;height:auto}
   .poster{width:min(76%,280px)}
   .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid2,.aud{grid-template-columns:1fr}
+  .grid2,.aud,.sg-grid{grid-template-columns:1fr}
   .pixrow{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:440px){
   .strip .wrap{flex-direction:column;align-items:flex-start}
   .cr{grid-template-columns:96px minmax(0,1fr)}
-  .cr img{width:96px}
+  .cr img,.cr .noimg{width:96px}
+  .chs{grid-template-columns:1fr}
   .agerow{grid-template-columns:44px minmax(0,1fr) 78px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -281,6 +300,15 @@ footer img{width:96px;height:auto}
     <div class="kpis" id="kpis"></div>
   </div>
 
+  <div class="sec" id="sgSec" hidden>
+    <div class="ttl"><h2 data-i="sg_t"></h2><span class="per" id="sgPer"></span></div>
+    <div class="kpis" id="sgKpis"></div>
+    <div class="sg-grid">
+      <div class="panel"><h3 data-i="sg_src_t"></h3><p class="h3sub" data-i="sg_src_s"></p><div class="srcs" id="sgSrc"></div></div>
+      <div class="panel"><h3 data-i="sg_ch_t"></h3><p class="h3sub" data-i="sg_ch_s"></p><div class="chs" id="sgCh"></div></div>
+    </div>
+  </div>
+
   <div class="sec grid2">
     <div class="panel">
       <div class="panel-h"><div><h3 data-i="chart_t"></h3></div><div class="mini" id="lineSel"></div></div>
@@ -328,6 +356,12 @@ footer img{width:96px;height:auto}
 
 const T = {
  pt:{strip_r:"Campanhas · Meta Ads", r_date:"Sábado, 12/12", r_time:"9:30 PM até tarde", count_lbl:"até a festa", obj:"Venda de ingressos no Meta, público por público.",
+  sg_t:"Vendas reais · Shotgun", sg_per:"Pedidos válidos de {a} a {b} · exportação da Shotgun de {u}", sg_ord:"Pedidos", sg_tix:"Ingressos", sg_rev:"Receita", sg_cpt:"Custo real por ingresso",
+  c_ord:"{n} vindos dos anúncios", c_tix:"{n} por pedido, em média", c_sgrev:"Valor pago, com taxas · {f} de face", c_cpt:"Investimento ÷ {n} {ing} com a UTM dos anúncios", c_cpt0:"Nenhum ingresso com a UTM dos anúncios no período", c_cpt0t:"Ainda sem ingresso com a UTM deste público",
+  sg_src_t:"Por origem", sg_src_s:"Pela UTM do link em que a pessoa comprou.", sg_ch_t:"App ou site", sg_ch_s:"Onde a compra foi finalizada.",
+  src_ads:"Anúncios Meta", src_amaxtus:"Instagram do AMA", src_shotgun:"Descoberta no app Shotgun", src_direct:"Direto, sem link rastreado",
+  ch_app:"App Shotgun", ch_website:"Site", ch_line:"{t} {ing} · {v}", src_line:"{o} {ped} · {t} {ing} · {v}",
+  ped1:"pedido", pedN:"pedidos", ing1:"ingresso", ingN:"ingressos", f_sep:"Shotgun", f_real:"Vendas reais (UTM dos anúncios)", sg_empty:"Sem vendas na Shotgun neste período.", no_thumb:"Sem miniatura",
   d_left:"faltam {n} dias", d_tom:"é amanhã", d_today:"é hoje", d_past:"aconteceu em 12/12",
   chip:"Dados da Meta", updated:"Atualizado em {d} às {t} · atualiza todo dia às 6h (horário de Brasília)",
   period:"Período", p7:"7 dias", p14:"14 dias", p30:"30 dias", pm:"Este mês", plm:"Mês passado", pall:"Tudo", pc:"Personalizado",
@@ -355,6 +389,12 @@ const T = {
   empty:"Nenhum anúncio no ar neste período.", foot:"Painel de campanhas · Ama Sounds", rank:["1º","2º","3º","4º","5º"],
   tab:{novo:["Público novo","Interesse em house e tech house · 21-35 · South SD"],lal:["Semelhantes","1% parecido com quem já comprou"],rmkt:["Remarketing","Interagiu com o Instagram do Ama · 365 dias"]}},
  es:{strip_r:"Campañas · Meta Ads", r_date:"Sábado, 12/12", r_time:"9:30 PM hasta tarde", count_lbl:"para la fiesta", obj:"Venta de entradas en Meta, público por público.",
+  sg_t:"Ventas reales · Shotgun", sg_per:"Pedidos válidos del {a} al {b} · exportación de Shotgun del {u}", sg_ord:"Pedidos", sg_tix:"Entradas", sg_rev:"Ingresos", sg_cpt:"Costo real por entrada",
+  c_ord:"{n} vinieron de los anuncios", c_tix:"{n} por pedido, en promedio", c_sgrev:"Valor pagado, con cargos · {f} de valor nominal", c_cpt:"Inversión ÷ {n} {ing} con la UTM de los anuncios", c_cpt0:"Ninguna entrada con la UTM de los anuncios en el período", c_cpt0t:"Aún sin entradas con la UTM de este público",
+  sg_src_t:"Por origen", sg_src_s:"Según la UTM del enlace donde la persona compró.", sg_ch_t:"App o sitio", sg_ch_s:"Dónde se completó la compra.",
+  src_ads:"Anuncios de Meta", src_amaxtus:"Instagram de AMA", src_shotgun:"Descubierto en la app de Shotgun", src_direct:"Directo, sin enlace rastreado",
+  ch_app:"App de Shotgun", ch_website:"Sitio web", ch_line:"{t} {ing} · {v}", src_line:"{o} {ped} · {t} {ing} · {v}",
+  ped1:"pedido", pedN:"pedidos", ing1:"entrada", ingN:"entradas", f_sep:"Shotgun", f_real:"Ventas reales (UTM de los anuncios)", sg_empty:"Sin ventas en Shotgun en este período.", no_thumb:"Sin miniatura",
   d_left:"faltan {n} días", d_tom:"es mañana", d_today:"es hoy", d_past:"fue el 12/12",
   chip:"Datos de Meta", updated:"Actualizado el {d} a las {t} (hora del Pacífico) · se actualiza todos los días a la 1 AM",
   period:"Período", p7:"7 días", p14:"14 días", p30:"30 días", pm:"Este mes", plm:"Mes pasado", pall:"Todo", pc:"Personalizado",
@@ -382,6 +422,12 @@ const T = {
   empty:"Ningún anuncio activo en este período.", foot:"Panel de campañas · Ama Sounds", rank:["1º","2º","3º","4º","5º"],
   tab:{novo:["Público nuevo","Interés en house y tech house · 21-35 · South SD"],lal:["Similares","1% parecido a quienes ya compraron"],rmkt:["Remarketing","Interactuó con el Instagram de Ama · 365 días"]}},
  en:{strip_r:"Campaigns · Meta Ads", r_date:"Saturday, December 12th", r_time:"9:30 PM – late", count_lbl:"until the ball", obj:"Ticket sales on Meta, audience by audience.",
+  sg_t:"Real sales · Shotgun", sg_per:"Valid orders from {a} to {b} · Shotgun export of {u}", sg_ord:"Orders", sg_tix:"Tickets", sg_rev:"Revenue", sg_cpt:"Real cost per ticket",
+  c_ord:"{n} came from the ads", c_tix:"{n} per order on average", c_sgrev:"Amount paid, with fees · {f} face value", c_cpt:"Ad spend ÷ {n} {ing} with the ads' UTM", c_cpt0:"No tickets with the ads' UTM in this period", c_cpt0t:"No tickets with this audience's UTM yet",
+  sg_src_t:"By source", sg_src_s:"By the UTM on the link the buyer used.", sg_ch_t:"App or website", sg_ch_s:"Where the purchase was completed.",
+  src_ads:"Meta ads", src_amaxtus:"AMA's Instagram", src_shotgun:"Found in the Shotgun app", src_direct:"Direct, no tracked link",
+  ch_app:"Shotgun app", ch_website:"Website", ch_line:"{t} {ing} · {v}", src_line:"{o} {ped} · {t} {ing} · {v}",
+  ped1:"order", pedN:"orders", ing1:"ticket", ingN:"tickets", f_sep:"Shotgun", f_real:"Real sales (ads' UTM)", sg_empty:"No Shotgun sales in this period.", no_thumb:"No thumbnail",
   d_left:"{n} days to go", d_tom:"it's tomorrow", d_today:"it's tonight", d_past:"happened on 12/12",
   chip:"Meta data", updated:"Updated {d} at {t} Pacific · refreshes daily at 1 AM",
   period:"Period", p7:"7 days", p14:"14 days", p30:"30 days", pm:"This month", plm:"Last month", pall:"All", pc:"Custom",
@@ -410,7 +456,7 @@ const T = {
   tab:{novo:["New audience","House and tech house fans · 21-35 · South SD"],lal:["Lookalikes","1% like past buyers"],rmkt:["Retargeting","Engaged with Ama's Instagram · 365 days"]}}
 };
 
-function boot(SEED){
+function boot(SEED,SG){
 /* ---------- state ---------- */
 const st = {lang:"pt", tab:"all", preset:"all", cs:null, ce:null, cmp:"none", ks:null, ke:null, line:null, aud:"m_spend"};
 try{ const l=localStorage.getItem("jj_lang"); if(l&&T[l]) st.lang=l; else { const n=(navigator.language||"en").slice(0,2); st.lang=T[n]?n:"en"; } }catch(e){ const n=(navigator.language||"en").slice(0,2); st.lang=T[n]?n:"en"; }
@@ -588,14 +634,47 @@ function renderChart(r,cr){
   $("chartLeg").innerHTML=`<span><i style="background:var(--bar)"></i>${t("leg_spend")}</span><span><i style="background:var(--lineC);height:3px"></i>${t(lines.find(x=>x[0]===st.line)[1])}</span>${cmpVals?`<span><i style="border-top:2px dashed var(--cream);height:0"></i>${t("leg_cmp")}</span>`:""}`;
 }
 
+/* ---------- Shotgun (vendas reais) ---------- */
+// SG.orders: {d, t (ingressos), face, paid, src (UTM SOURCE), ch (app|website)}
+// UTMs dos anúncios: "ads" (todos os públicos), "ads-prosp" (público novo), "ads-quente" (remarketing)
+const ADS_TAB={"ads-prosp":"novo","ads-quente":"rmkt"};
+const isAds=s=>s==="ads"||s.startsWith("ads-");
+const srcGroup=s=>isAds(s)?"ads":s;
+const sgOrders=r=>(SG&&SG.orders||[]).filter(o=>inR(o.d,r));
+const adsOrders=r=>sgOrders(r).filter(o=>isAds(o.src)&&(st.tab==="all"||ADS_TAB[o.src]===st.tab));
+const sum=(l,k)=>l.reduce((t,o)=>t+o[k],0);
+const pw=n=>n===1?t("ped1"):t("pedN"), iw=n=>n===1?t("ing1"):t("ingN");
+function renderShotgun(r){
+  if(!SG||!SG.orders){ $("sgSec").hidden=true; return; }
+  $("sgSec").hidden=false;
+  const L=sgOrders(r), A=adsOrders(r);
+  const o=L.length, tk=sum(L,"t"), paid=sum(L,"paid"), face=sum(L,"face");
+  const at=sum(A,"t"), spend=agg(r).spend;
+  $("sgPer").textContent=t("sg_per",{a:mdy(r[0]),b:mdy(r[1]),u:mdy(SG.updated)});
+  const defs=[
+    ["ord","sg_ord",int(o),t("c_ord",{n:int(sgOrders(r).filter(x=>isAds(x.src)).length)}),false],
+    ["tix","sg_tix",int(tk),t("c_tix",{n:o?(tk/o).toFixed(1):"0"}),false],
+    ["rev","sg_rev",money(paid),t("c_sgrev",{f:money(face)}),false],
+    ["cpt","sg_cpt",at>0?money(spend/at):"—",at>0?t("c_cpt",{n:int(at),ing:iw(at)}):t(st.tab==="all"?"c_cpt0":"c_cpt0t"),true],
+  ];
+  $("sgKpis").innerHTML=defs.map(([k,lab,v,cap,fill])=>`<div class="kpi${fill?" fill":""}" id="sg-${k}"><span class="k">${t(lab)}</span><div class="row"><span class="v">${v}</span></div><span class="c">${cap}</span></div>`).join("");
+  if(!o){ $("sgSrc").innerHTML=`<div class="empty">${t("sg_empty")}</div>`; $("sgCh").innerHTML=""; return; }
+  const g={}; for(const x of L){ const k=srcGroup(x.src); const e=g[k]=g[k]||{o:0,t:0,v:0}; e.o++; e.t+=x.t; e.v+=x.paid; }
+  const rows=Object.entries(g).sort((a,b)=>b[1].t-a[1].t||b[1].o-a[1].o); const mx=Math.max(...rows.map(([,e])=>e.t));
+  $("sgSrc").innerHTML=rows.map(([k,e])=>`<div class="src ${k==="ads"?"ads":""}" id="src-${k}"><div class="sh"><b>${T[st.lang]["src_"+k]||k}</b><span>${t("src_line",{o:int(e.o),ped:pw(e.o),t:int(e.t),ing:iw(e.t),v:money(e.v)})}</span></div><div class="bar"><i style="width:${(e.t/mx*100).toFixed(1)}%"></i></div></div>`).join("");
+  $("sgCh").innerHTML=["app","website"].map(c=>{ const l=L.filter(x=>x.ch===c), n=l.length, tt=sum(l,"t");
+    return `<div class="ch" id="ch-${c}"><div class="cl">${t("ch_"+c)}</div><div class="cv">${int(n)} <small style="font-size:15px;color:var(--muted)">${pw(n)}</small></div><div class="cs">${t("ch_line",{t:int(tt),ing:iw(tt),v:money(sum(l,"paid"))})}</div><div class="cs">${pct(n/o)}</div></div>`; }).join("");
+}
+
 function renderFunnels(r){
   const a=agg(r);
   const steps=[["f_imp",a.imp],["f_clk",a.clk],["f_lpv",a.lpv],["f_ic",a.ic],["f_pur",a.pur]];
   const w=[100,86,72,60,50];
   $("funC").innerHTML=steps.map(([k,v],i)=>{
     const conv=i?`<div class="fconv">↓ ${steps[i-1][1]>0?pct(v/steps[i-1][1]):"—"}</div>`:"";
-    return conv+`<div class="fstep${i===steps.length-1?" last":""}" style="--w:${w[i]}%"><span class="fl">${t(k)}</span><span class="fv">${int(v)}</span></div>`;
-  }).join("");
+    return conv+`<div class="fstep${i===steps.length-1&&!SG?" last":""}" style="--w:${w[i]}%"><span class="fl">${t(k)}</span><span class="fv">${int(v)}</span></div>`;
+  }).join("")+(SG&&SG.orders?(()=>{ const A=adsOrders(r), n=A.length, tk=sum(A,"t");
+    return `<div class="fsep">${t("f_sep")}</div><div class="fstep real" id="f-real" style="--w:72%"><span class="fl">${t("f_real")}<br><small style="font-size:12px;opacity:.85">${int(n)} ${pw(n)} · ${int(tk)} ${iw(tk)}</small></span><span class="fv">${int(n)}</span></div>`; })():"");
   const px={pv:0,atc:0,ic:0,pur:0};
   for(const x of SEED.pixel_daily){ if(!inR(x[0],r)) continue; px.pv+=x[1];px.atc+=x[2];px.ic+=x[3];px.pur+=x[4]; }
   const ps=[["p_pv",px.pv],["p_atc",px.atc],["p_ic",px.ic],["p_pur",px.pur]];
@@ -654,7 +733,7 @@ function renderCreatives(r){
   list.sort((a,b)=>cost(a[1])-cost(b[1])||b[1].s-a[1].s);
   if(!list.length){ $("crs").innerHTML=`<div class="empty">${t("empty")}</div>`; return; }
   $("crs").innerHTML=list.map(([k,o],i)=>{ const c=SEED.creatives[k];
-    return `<article class="cr" id="cr-${k}"><img src="${c.thumb}" alt="${c.label[st.lang]||c.name}"><div><div class="rk">${T[st.lang].rank[i]||(i+1)}</div><div class="cn">${c.label[st.lang]||c.name}</div>
+    return `<article class="cr" id="cr-${k}">${c.thumb?`<img src="${c.thumb}" alt="${c.label[st.lang]||c.name}">`:`<div class="noimg">${t("no_thumb")}</div>`}<div><div class="rk">${T[st.lang].rank[i]||(i+1)}</div><div class="cn">${c.label[st.lang]||c.name}</div>
      <div class="q"><div><span>${t("q_pur")}</span><b>${int(o.p)}</b></div><div><span>${t("q_cpa")}</span><b>${o.p?money(o.s/o.p):"—"}</b></div><div><span>${t("q_lpv")}</span><b>${int(o.l)}</b></div><div><span>${t("q_ctr")}</span><b>${o.i?pct(o.c/o.i):"—"}</b></div></div></div>
      <div class="ft"><span>${t("cr_ft",{s:money(o.s),i:int(o.i)})}</span>${c.preview?`<a href="${c.preview}" target="_blank" rel="noopener">${t("cr_btn")}</a>`:""}</div></article>`; }).join("");
 }
@@ -668,7 +747,7 @@ function render(){
   const m=tabMeta(st.tab); $("tabTitle").textContent=m.nm; $("tabTag").textContent=m.code;
   const a=agg(r); const nd=a.days.size;
   $("tabPer").textContent=t("per_lbl",{a:mdy(r[0]),b:mdy(r[1]),n:nd,dias:nd===1?t("day1"):t("dayN")})+(cr?" · "+t("vs",{p:mdy(cr[0])+" – "+mdy(cr[1])}):"");
-  renderKPIs(r,cr); renderChart(r,cr); renderFunnels(r); renderAudience(r); renderTable(r); renderCreatives(r);
+  renderKPIs(r,cr); renderShotgun(r); renderChart(r,cr); renderFunnels(r); renderAudience(r); renderTable(r); renderCreatives(r);
 }
 
 /* ---------- events ---------- */
@@ -679,7 +758,10 @@ $("kStart").onchange=e=>{st.ks=e.target.value;render();}; $("kEnd").onchange=e=>
 let rz; window.addEventListener("resize",()=>{clearTimeout(rz); rz=setTimeout(()=>renderChart(range(),cmpRange(range())),120);});
 render();
 }
-fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok) throw new Error(r.status); return r.json();}).then(boot).catch(()=>{
+Promise.all([
+  fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok) throw new Error(r.status); return r.json();}),
+  fetch("shotgun.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null)
+]).then(([d,sg])=>boot(d,sg)).catch(()=>{
   const m=document.createElement("p"); m.className="empty"; m.style.margin="24px auto"; m.textContent="Não foi possível carregar os dados agora. Recarregue a página em alguns minutos.";
   document.querySelector("main").prepend(m);
 });

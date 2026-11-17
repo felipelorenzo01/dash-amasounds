@@ -64,3 +64,15 @@ A pasta `raw/` não vai para o repositório. O Vercel publica sozinho a cada pus
 ## Públicos (abas)
 
 As abas e as palavras que reconhecem cada público estão em `scripts/config.json` → `audiences`, com os nomes nos três idiomas (pt, es, en). Criativos novos ganham nome traduzido em `creatives`; sem isso, aparece o nome do anúncio.
+
+## Vendas reais (Shotgun)
+
+O bloco "Vendas reais · Shotgun" e a última etapa do funil leem `shotgun.json`. Esse arquivo **não** é atualizado pela tarefa diária: ele é refeito à mão quando chega uma nova exportação de pedidos válidos da Shotgun (CSV). Um pedido por linha, sem nome, e-mail ou número do pedido (o arquivo é público):
+
+```json
+{ "updated": "AAAA-MM-DD", "orders": [ {"d": "AAAA-MM-DD", "t": 2, "face": 50, "paid": 56.26, "src": "ads", "ch": "app"} ] }
+```
+
+- `d` = data da compra (Los Angeles); `t` = ingressos; `face` = soma de VALOR; `paid` = soma de VALOR FINAL.
+- `src` = UTM SOURCE em minúsculas (vazio vira `direct`). As UTMs dos anúncios são `ads`, `ads-prosp` (público novo) e `ads-quente` (remarketing).
+- `ch` = UTM MEDIUM (`app` ou `website`).

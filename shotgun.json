@@ -1,0 +1,110 @@
+{
+ "updated": "2026-11-17",
+ "source": "Shotgun · exportação de pedidos válidos",
+ "orders": [
+  {
+   "d": "2026-11-09",
+   "t": 1,
+   "face": 20.0,
+   "paid": 22.5,
+   "src": "amaxtus",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-09",
+   "t": 2,
+   "face": 40.0,
+   "paid": 45.0,
+   "src": "amaxtus",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-09",
+   "t": 2,
+   "face": 40.0,
+   "paid": 45.0,
+   "src": "amaxtus",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-10",
+   "t": 1,
+   "face": 20.0,
+   "paid": 22.5,
+   "src": "ads",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-10",
+   "t": 2,
+   "face": 40.0,
+   "paid": 45.0,
+   "src": "amaxtus",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-10",
+   "t": 1,
+   "face": 20.0,
+   "paid": 22.5,
+   "src": "shotgun",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-10",
+   "t": 2,
+   "face": 40.0,
+   "paid": 45.0,
+   "src": "shotgun",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-10",
+   "t": 3,
+   "face": 60.0,
+   "paid": 67.5,
+   "src": "amaxtus",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-11",
+   "t": 1,
+   "face": 20.0,
+   "paid": 22.5,
+   "src": "direct",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-11",
+   "t": 1,
+   "face": 25.0,
+   "paid": 28.13,
+   "src": "amaxtus",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-13",
+   "t": 2,
+   "face": 50.0,
+   "paid": 56.26,
+   "src": "amaxtus",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-14",
+   "t": 2,
+   "face": 50.0,
+   "paid": 56.26,
+   "src": "ads",
+   "ch": "app"
+  },
+  {
+   "d": "2026-11-15",
+   "t": 1,
+   "face": 25.0,
+   "paid": 28.13,
+   "src": "direct",
+   "ch": "app"
+  }
+ ]
+}

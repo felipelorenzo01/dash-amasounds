@@ -1,4 +1,14 @@
 {
   "cleanUrls": true,
-  "headers": [{ "source": "/data.json", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }]
+  "headers": [
+    {
+      "source": "/(data|shotgun).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
 }
