@@ -89,6 +89,26 @@
       "pt": "Carrossel · Pippi Ciez",
       "es": "Carrusel · Pippi Ciez",
       "en": "Carousel · Pippi Ciez"
+    },
+    "video-early-bird": {
+      "pt": "Vídeo · Early Bird",
+      "es": "Video · Early Bird",
+      "en": "Video · Early Bird"
+    },
+    "estatico-early-bird": {
+      "pt": "Estático · Early Bird",
+      "es": "Estático · Early Bird",
+      "en": "Static · Early Bird"
+    },
+    "motion-line-up-early-bird": {
+      "pt": "Motion line-up · Early Bird",
+      "es": "Motion line-up · Early Bird",
+      "en": "Motion line-up · Early Bird"
+    },
+    "motion-line-up": {
+      "pt": "Motion line-up",
+      "es": "Motion line-up",
+      "en": "Motion line-up"
     }
   }
 }

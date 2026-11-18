@@ -105,6 +105,14 @@
    "paid": 28.13,
    "src": "direct",
    "ch": "app"
+  },
+  {
+   "d": "2026-11-17",
+   "t": 1,
+   "face": 25.0,
+   "paid": 28.13,
+   "src": "ads-prosp",
+   "ch": "website"
   }
  ]
 }
