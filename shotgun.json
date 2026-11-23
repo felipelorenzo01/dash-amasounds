@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17",
+ "updated": "2026-11-23",
  "source": "Shotgun · exportação de pedidos válidos",
  "orders": [
   {
@@ -112,6 +112,22 @@
    "face": 25.0,
    "paid": 28.13,
    "src": "ads-prosp",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-19",
+   "t": 1,
+   "face": 25.0,
+   "paid": 28.13,
+   "src": "ads",
+   "ch": "website"
+  },
+  {
+   "d": "2026-11-21",
+   "t": 2,
+   "face": 50.0,
+   "paid": 56.26,
+   "src": "ads",
    "ch": "website"
   }
  ]
